@@ -60,3 +60,6 @@ typings/
 # webpack bundle output
 dist/
 
+# for ig
+cookies/
+
