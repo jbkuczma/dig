@@ -1,35 +1,76 @@
-const electron = require('electron')
-// Module to control application life.
-const app = electron.app
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+const {app, BrowserWindow, ipcMain} = require('electron')
 
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+
+const ig = require('./instagram.js')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+/* init, automatically called */
+(function(){
+  let cookieDirectory = __dirname + '/cookies'
+  let igJson = __dirname + '/cookies/user.json'
+  if(!fs.existsSync(cookieDirectory)) {
+    fs.mkdirSync(cookieDirectory)
+  }
+  if(!fs.existsSync(igJson)) {
+    fs.closeSync(
+      fs.openSync(igJson, 'w')
+    )
+  }
+})()
+
+// private ig
+var Client = require('instagram-private-api').V1;
+var device = new Client.Device('user');
+var storage = new Client.CookieFileStorage(__dirname + '/cookies/user.json');
+
 function createWindow () {
+  let loggedIn = false //user has already logged in, we'll login them in automatically
+
+  /* 
+    check for files needed for private ig
+  */
+
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    width: 800, 
+    height: 600,
+    backgroundColor: '#FBFBFB'
+  })
 
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'login.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  if (loggedIn) {
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+  } else {
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'login.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+  }
 
-  // and load the index.html of the app.
-  // mainWindow.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
+  mainWindow.webContents.openDevTools()
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  ipcMain.on('loginAttempt', (event, username, password) => {
+    let success = false
+
+    if(success) {
+      mainWindow.reload()
+      mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+      }))
+    }
+  })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
