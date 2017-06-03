@@ -2,6 +2,10 @@
     <head>
         <title> dig </title>
         <style type="text/css">
+            body {
+                font-family: sans-serif;
+                background: #FBFBFB;
+            }
             .container {
                 text-align: center;
             }
@@ -47,22 +51,42 @@
             .container {
                 padding: 16px;
             }
+
+            img.loader {
+                visibility: hidden;
+            }
         </style>
     </head>
     <body>
         <div class="content">
-            <form action="instagramLogin" class="loginForm">
+            <form action="#" onsubmit="instagramLogin(this)" class="loginForm">
                 <div class="imgcontainer">
                     <img src="assets/instagram.svg" alt="instagram" class="ig">
                 </div>
 
                 <div class="container">
                     <p><strong>dig</strong>, create custom image feeds</p>
-                    <input type="text" placeholder="Username" name="uname" required>
-                    <input type="password" placeholder="Password" name="psw" required>
-                    <button type="submit">Login</button>
+                    <input type="text" placeholder="Username" name="uname" id="uname" required>
+                    <input type="password" placeholder="Password" name="psw" id="psw" required>
+                    <button type="submit" id="submitButton" >Login</button>
+                    <img src="assets/loading.svg" alt="loading" class="loader" />
                 </div>
             </form>
         </div>
+        <script type="text/javascript">
+            const ipc = require('electron').ipcRenderer
+
+            function showLoader() {
+                let loader = document.querySelector("img.loader")
+                loader.style.visibility = 'visible'
+            }
+            function instagramLogin(event) {
+                showLoader()
+                let username = document.getElementById('uname').value
+                let password = document.getElementById('psw').value
+
+                ipc.send('loginAttempt', username, password)
+            }
+        </script>
     </body>
 </html>
