@@ -10,17 +10,23 @@ const ig = require('./instagram.js')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-/* init, automatically called */
-(function(){
+let userIsAlreadyLoggedIn = true;
+/* 
+  init, automatically called 
+  check for files needed for private ig
+*/
+(function init(){
   let cookieDirectory = __dirname + '/cookies'
   let igJson = __dirname + '/cookies/user.json'
   if(!fs.existsSync(cookieDirectory)) {
     fs.mkdirSync(cookieDirectory)
+    userIsAlreadyLoggedIn = false
   }
   if(!fs.existsSync(igJson)) {
     fs.closeSync(
       fs.openSync(igJson, 'w')
     )
+     userIsAlreadyLoggedIn = false
   }
 })()
 
@@ -30,11 +36,6 @@ var device = new Client.Device('user');
 var storage = new Client.CookieFileStorage(__dirname + '/cookies/user.json');
 
 function createWindow () {
-  let loggedIn = false //user has already logged in, we'll login them in automatically
-
-  /* 
-    check for files needed for private ig
-  */
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -43,13 +44,14 @@ function createWindow () {
     backgroundColor: '#FBFBFB'
   })
 
-  if (loggedIn) {
+  if (userIsAlreadyLoggedIn) {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
       slashes: true
     }))
   } else {
+    // user is not logged in, show them the login in screen
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'login.html'),
       protocol: 'file:',
@@ -59,17 +61,16 @@ function createWindow () {
 
   mainWindow.webContents.openDevTools()
 
-  ipcMain.on('loginAttempt', (event, username, password) => {
-    let success = false
-
-    if(success) {
+  ipcMain.on('loginSuccessful', (event, data) => {
+      console.log('success')
+      console.log(data)
+      // write username and password to file
       mainWindow.reload()
       mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true
       }))
-    }
   })
 
   // Emitted when the window is closed.

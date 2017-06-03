@@ -55,11 +55,17 @@
             img.loader {
                 visibility: hidden;
             }
+
+            #errorText {
+                visibility: hidden;
+                color: #ED4956;
+            }
         </style>
     </head>
     <body>
         <div class="content">
-            <form action="#" onsubmit="instagramLogin(this)" class="loginForm">
+            <!--<form action="#" onsubmit="instagramLogin(this)" class="loginForm">-->
+            <div class="loginForm form">
                 <div class="imgcontainer">
                     <img src="assets/instagram.svg" alt="instagram" class="ig">
                 </div>
@@ -68,24 +74,51 @@
                     <p><strong>dig</strong>, create custom image feeds</p>
                     <input type="text" placeholder="Username" name="uname" id="uname" required>
                     <input type="password" placeholder="Password" name="psw" id="psw" required>
-                    <button type="submit" id="submitButton" >Login</button>
+                    <button type="submit" id="submitButton" onclick="instagramLogin(this)">Login</button>
                     <img src="assets/loading.svg" alt="loading" class="loader" />
+                    <p id="errorText"> There was an error logging in. Please try again </p>
                 </div>
-            </form>
+            <!--</form>-->
+            </div>
         </div>
         <script type="text/javascript">
             const ipc = require('electron').ipcRenderer
+            var Client = require('instagram-private-api').V1;
+            var device = new Client.Device('user');
+            var storage = new Client.CookieFileStorage(__dirname + '/cookies/user.json');
 
             function showLoader() {
                 let loader = document.querySelector("img.loader")
                 loader.style.visibility = 'visible'
             }
+
             function instagramLogin(event) {
                 showLoader()
                 let username = document.getElementById('uname').value
                 let password = document.getElementById('psw').value
+                tryLogin(username, password)
+            }
 
-                ipc.send('loginAttempt', username, password)
+            function tryLogin(username, password) {
+                Client.Session.create(device, storage, username, password)
+                    .then((session) => {
+                        console.log(session)
+                        let user = {
+                            'user': username,
+                            'pass': password
+                        }
+                        // login successful
+                        /* @todo: save username and password */
+                        ipc.send('loginSuccessful', user)
+
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        let loginFailedText = document.getElementById('errorText')
+                        loginFailedText.style.visibility = 'visible'
+                        let loader = document.querySelector("img.loader")
+                        loader.style.visibility = 'hidden'
+                    })
             }
         </script>
     </body>
