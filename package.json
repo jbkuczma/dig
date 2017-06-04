@@ -1,22 +1,20 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "dig",
+  "version": "0.1.0",
+  "description": "Create custom Instagram feeds on your desktop",
   "main": "main.js",
   "scripts": {
     "watch": "node_modules/.bin/webpack --watch",
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/jbkuczma/dig",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "React",
+    "Instagram"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "James Kuczmarski",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
