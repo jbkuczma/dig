@@ -39,6 +39,7 @@ body::-webkit-scrollbar {
 }
 
 .instagramImage {
+    text-align: left;
     width: 100%;
     margin-bottom: 5px; /* give a little breathing room for each image */
 }
@@ -52,10 +53,25 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 #likeButton {
-    height: 40px;
+    height: 30px;
+    border: none;
+    background-color: #FBFBFB;
+    width: 30px;
 }
 /* heart svg used inside button */
 #likeButton > img {
-    height: 40px;
+    height: 30px;
     width: auto;
+    vertical-align: middle;
+}
+#likeButton:focus,
+#likebutton > img:focus {
+    outline: 0 !important; /* remove blue border on focus/click */
+}
+.instagramImage > span {
+    white-space:normal;
+    word-wrap: break-word;
+}
+#imageCaption { 
+    font-weight: 200;
 }
