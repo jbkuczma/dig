@@ -42,7 +42,22 @@ export default class Image extends React.Component {
             .then((userFeed) => {
                 let photos = []
                 for(var i = 0; i < 2; i ++){
-                    let url = userFeed[i]._params.images[0].url.split('?')[0]
+                    // if(userFeed[i]._params.images[0] instanceof Array) {
+                    //     /* if the media grabbed is an album, it is returned as an array or arrays. the first array will be grabbed */
+                    //     let url = userFeed[i]._params.images[0][0].url.split('?')[0]
+                    // } else {
+                    //     /* single item */
+                    //     let url = userFeed[i]._params.images[0].url.split('?')[0]
+                    // }
+                    let url = ''
+                    let imageUrl = userFeed[i]._params.images[0].url
+                    if(imageUrl === undefined) {
+                        url = userFeed[i]._params.images[0][0].url.split('?')[0]
+                    } else {
+                        url = imageUrl.split('?')[0]
+                    }
+                    // let url = userFeed[i]._params.images[0].url.split('?')[0]
+                    
                     let id = userFeed[i]._params.id
                     let caption = userFeed[i]._params.caption
                     let data = {
@@ -71,6 +86,9 @@ export default class Image extends React.Component {
                                 <button id="likeButton">
                                     <img src="./assets/heart.svg" />    
                                 </button>
+                                <div>
+                                    <span id="imgCaption"> @{this.props.user} </span>
+                                </div>
                                 <span id="imageCaption"> {photo.caption === undefined ? '' : photo.caption} </span>
                             </div>
                         )
@@ -80,9 +98,9 @@ export default class Image extends React.Component {
         } else {
             return (
                 <div>
-                    <img src="./assets/loading.svg" alt="loading" class="imageIsLoading" />
+                    <img src="./assets/loading.svg" alt="loading" />
                     <br />
-                    <img src="./assets/loading.svg" alt="loading" class="imageIsLoading" />
+                    <img src="./assets/loading.svg" alt="loading" />
                 </div>
             )
         }

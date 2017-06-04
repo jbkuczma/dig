@@ -75,7 +75,3 @@ body::-webkit-scrollbar {
 #imageCaption { 
     font-weight: 200;
 }
-.imageIsLoading {
-    text-align: center;
-    display: block;
-}
