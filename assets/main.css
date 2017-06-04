@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
     background: #FBFBFB;
 }
+/* hide veritcal scrollbar */
+body::-webkit-scrollbar {
+    display: none;
+}
 
 /* container that holds each image feed for a group */
 .allImageFeeds {
@@ -11,7 +15,7 @@ body {
 
 /* custom horizontal scrollbar */
 .allImageFeeds::-webkit-scrollbar {
-    height: 5px; 
+    height: 5px;
 }
 .allImageFeeds::-webkit-scrollbar-thumb {
     background-color: #D3D3D3;
@@ -19,9 +23,39 @@ body {
 
 /* individual image feed, content of .allImageFeeds */
 .imageFeed {
+    padding: 5px; /* give a little space between feeds */
     text-align: center;
     display: inline-block; /* horizontal scrolling */
     width: 95vw; /* 95% of viewport width */
-    border: 1px solid #EEEEEE;
+    /*border: 1px solid #EEEEEE;*/
     vertical-align: top; /* feed might vary in height, align them all from the top of window */
+}
+
+.imageFeedHeader {
+    border-bottom: 1px solid #EEEEEE;
+}
+.imageFeedHeader > h1 {
+    font-weight: 200;
+}
+
+.instagramImage {
+    width: 100%;
+    margin-bottom: 5px; /* give a little breathing room for each image */
+}
+.instagramImage > img {
+    width: 100%;
+    height: auto;
+    vertical-align: middle; /* remove white padding at bottom of img tag */
+}
+.instagramImage > button {
+    display: block;
+    width: 100%;
+}
+#likeButton {
+    height: 40px;
+}
+/* heart svg used inside button */
+#likeButton > img {
+    height: 40px;
+    width: auto;
 }
