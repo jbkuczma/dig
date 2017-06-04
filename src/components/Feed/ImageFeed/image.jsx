@@ -79,7 +79,11 @@ export default class Image extends React.Component {
             )
         } else {
             return (
-                <p> loading </p>
+                <div>
+                    <img src="./assets/loading.svg" alt="loading" class="imageIsLoading" />
+                    <br />
+                    <img src="./assets/loading.svg" alt="loading" class="imageIsLoading" />
+                </div>
             )
         }
     }
