@@ -76,7 +76,7 @@ function createWindow () {
       let dataToAdd = {}
       dataToAdd['username'] = data['user']
       dataToAdd['password'] = data['pass']
-      dataToAdd['feeds'] = {}
+      dataToAdd['feeds'] = []
       let jsonFileToWriteTo =  __dirname + '/cookies/info.json'
       fs.readFile(jsonFileToWriteTo, (error, data) => {
         fs.writeFile(jsonFileToWriteTo, JSON.stringify(dataToAdd))
