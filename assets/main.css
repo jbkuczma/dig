@@ -1,0 +1,27 @@
+body {
+    font-family: sans-serif;
+    background: #FBFBFB;
+}
+
+/* container that holds each image feed for a group */
+.allImageFeeds {
+    overflow-x: scroll;
+    white-space: nowrap; /* give the feel of unlimited width */
+}
+
+/* custom horizontal scrollbar */
+.allImageFeeds::-webkit-scrollbar {
+    height: 5px; 
+}
+.allImageFeeds::-webkit-scrollbar-thumb {
+    background-color: #D3D3D3;
+}
+
+/* individual image feed, content of .allImageFeeds */
+.imageFeed {
+    text-align: center;
+    display: inline-block; /* horizontal scrolling */
+    width: 95vw; /* 95% of viewport width */
+    border: 1px solid #EEEEEE;
+    vertical-align: top; /* feed might vary in height, align them all from the top of window */
+}
