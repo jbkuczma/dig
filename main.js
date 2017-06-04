@@ -13,11 +13,12 @@ let mainWindow
 let userIsAlreadyLoggedIn = true;
 /* 
   init, automatically called 
-  check for files needed for private ig
+  if the directories and files that are needed for private ig are not present, create them
 */
 (function init(){
   let cookieDirectory = __dirname + '/cookies'
   let igJson = __dirname + '/cookies/user.json'
+  let userJson = __dirname + '/cookies/info.json' // where username, password, and custom feeds will be stored
   if(!fs.existsSync(cookieDirectory)) {
     fs.mkdirSync(cookieDirectory)
     userIsAlreadyLoggedIn = false
@@ -25,6 +26,12 @@ let userIsAlreadyLoggedIn = true;
   if(!fs.existsSync(igJson)) {
     fs.closeSync(
       fs.openSync(igJson, 'w')
+    )
+     userIsAlreadyLoggedIn = false
+  }
+  if(!fs.existsSync(userJson)) {
+    fs.closeSync(
+      fs.openSync(userJson, 'w')
     )
      userIsAlreadyLoggedIn = false
   }
@@ -51,7 +58,7 @@ function createWindow () {
       slashes: true
     }))
   } else {
-    // user is not logged in, show them the login in screen
+    // user is not logged in, show them the login screen
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'login.html'),
       protocol: 'file:',
@@ -62,9 +69,17 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 
   ipcMain.on('loginSuccessful', (event, data) => {
-      console.log('success')
-      console.log(data)
-      // write username and password to file
+      /* 
+        Save the username and password of the logged in user
+        ASSUMES that the info.json file is empty 
+      */
+      let dataToAdd = {}
+      dataToAdd['username'] = data['user']
+      dataToAdd['password'] = data['pass']
+      let jsonFileToWriteTo =  __dirname + '/cookies/info.json'
+      fs.readFile(jsonFileToWriteTo, (error, data) => {
+        fs.writeFile(jsonFileToWriteTo, JSON.stringify(dataToAdd))
+      })
       mainWindow.reload()
       mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
