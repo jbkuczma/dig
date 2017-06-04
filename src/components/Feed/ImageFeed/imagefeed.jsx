@@ -16,7 +16,9 @@ export default class ImageFeed extends React.Component {
     render() {
         return (
             <div className="imageFeed">
-                <h1> {this.state.title} </h1>
+                <div className="imageFeedHeader">
+                    <h1> {this.state.title} </h1>
+                </div>
                 {
                     this.state.profilesInFeed.map( (user, key) => {
                         return <Image user={user} key={key} />
