@@ -41,7 +41,8 @@ body::-webkit-scrollbar {
 .instagramImage {
     text-align: left;
     width: 100%;
-    margin-bottom: 5px; /* give a little breathing room for each image */
+    margin-bottom: 15px; /* give a little breathing room for each image */
+    border-bottom: 1px #D3D3D3 solid;
 }
 .instagramImage > img {
     width: 100%;
@@ -59,10 +60,13 @@ body::-webkit-scrollbar {
     width: 30px;
 }
 /* heart svg used inside button */
-#likeButton > img {
+.likeButton {
     height: 30px;
     width: auto;
     vertical-align: middle;
+}
+.likeButton:hover {
+    cursor: pointer;
 }
 #likeButton:focus,
 #likebutton > img:focus {
@@ -74,4 +78,8 @@ body::-webkit-scrollbar {
 }
 #imageCaption { 
     font-weight: 200;
+}
+
+img.heart {
+    fill: red;
 }
