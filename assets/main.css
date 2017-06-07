@@ -78,6 +78,7 @@ body::-webkit-scrollbar {
 }
 #imageCaption { 
     font-weight: 200;
+    font-size: 14px;
 }
 
 img.heart {
