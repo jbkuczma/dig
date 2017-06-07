@@ -64,7 +64,7 @@ export default class ImageFeed extends React.Component {
                                         hasLiked: hasLiked
                                     }
                                     photos.push(data)
-                                    if(photos.length === this.state.profilesInFeed.length) {
+                                    if(photos.length === (this.state.profilesInFeed.length * 2)) {
                                         this.setState({
                                             images: photos,
                                             ready: true
