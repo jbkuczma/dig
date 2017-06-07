@@ -33,6 +33,35 @@ export default class ImageFeed extends React.Component {
         this.fetchImages()
     }
 
+    /**
+     * Durstenfeld shuffle algorithm. Show the photos in a somewhat random order
+     */
+    // shufflePhotos(photos) {
+    //     for (var i = photos.length - 1; i > 0; i--) {
+    //         var j = Math.floor(Math.random() * (i + 1));
+    //         var temp = photos[i];
+    //         photos[i] = photos[j];
+    //         photos[j] = temp;
+    //     }
+    //     return photos;
+    // }
+
+    /* trying to implement the OG ig chronological ordering of photos */
+    sortPhotos(photos) {
+        return photos.sort((photo1, photo2) => {
+            return new Date(photo2.dateAdded) - new Date(photo1.dateAdded)
+        })
+    }
+
+    toDateTime(secs) {
+        // let t = new Date(1970, 0, 1); // Epoch
+        if(secs.length === 10) {
+            return new Date(secs * 1000)
+        } else {
+            return new Date(secs)
+        }
+    }
+
     fetchImages() {
         Client.Session.create(device, storage, username, password)
             .then((session) => {
@@ -49,6 +78,7 @@ export default class ImageFeed extends React.Component {
                                     let url = ''
                                     let hasLiked = userFeed[i]._params.hasLiked
                                     let imageUrl = userFeed[i]._params.images[0].url
+                                    let dateAdded = this.toDateTime(userFeed[i]._params.takenAt)
                                     if(imageUrl === undefined) {
                                         url = userFeed[i]._params.images[0][0].url.split('?')[0]
                                     } else {
@@ -57,6 +87,7 @@ export default class ImageFeed extends React.Component {
                                     let id = userFeed[i]._params.id
                                     let caption = userFeed[i]._params.caption
                                     let data = {
+                                        dateAdded: dateAdded,
                                         username: user,
                                         url: url, 
                                         id: id,
@@ -66,7 +97,7 @@ export default class ImageFeed extends React.Component {
                                     photos.push(data)
                                     if(photos.length === (this.state.profilesInFeed.length * 2)) {
                                         this.setState({
-                                            images: photos,
+                                            images: this.sortPhotos(photos),
                                             ready: true
                                         })
                                     }

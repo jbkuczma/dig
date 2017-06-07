@@ -1,6 +1,6 @@
 {
   "name": "dig",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Create custom Instagram feeds on your desktop",
   "main": "main.js",
   "scripts": {
