@@ -20,86 +20,60 @@ export default class Image extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: this.props.user,
-            images: [],
-            ready: false
+            user: this.props.photo.user,
+            url: this.props.photo.url,
+            caption: this.props.photo.caption,
+            hasLiked: this.props.photo.hasLiked,
+            ready: true
         }
     }
-
-    componentWillMount(){
-        this.fetchImages()
-    }
-
-    fetchImages() {
+    
+    likePhoto(photo) {
+        let hasLiked = this.props.photo.hasLiked
+        let id = this.props.photo.id
         Client.Session.create(device, storage, username, password)
             .then((session) => {
-                return [session, Client.Account.searchForUser(session, this.props.user)]
-            })
-            .spread((session, account) => {
-                let userid = account.id
-                let feed = new Client.Feed.UserMedia(session, userid)
-                return feed.get() /* returns ~12 photos */
-            .then((userFeed) => {
-                let photos = []
-                for(var i = 0; i < 2; i ++){
-                    // if(userFeed[i]._params.images[0] instanceof Array) {
-                    //     /* if the media grabbed is an album, it is returned as an array or arrays. the first array will be grabbed */
-                    //     let url = userFeed[i]._params.images[0][0].url.split('?')[0]
-                    // } else {
-                    //     /* single item */
-                    //     let url = userFeed[i]._params.images[0].url.split('?')[0]
-                    // }
-                    let url = ''
-                    let imageUrl = userFeed[i]._params.images[0].url
-                    if(imageUrl === undefined) {
-                        url = userFeed[i]._params.images[0][0].url.split('?')[0]
-                    } else {
-                        url = imageUrl.split('?')[0]
-                    }
-                    // let url = userFeed[i]._params.images[0].url.split('?')[0]
-                    
-                    let id = userFeed[i]._params.id
-                    let caption = userFeed[i]._params.caption
-                    let data = {
-                        url: url, 
-                        id: id,
-                        caption: caption
-                    }
-                    photos.push(data)
+                if(hasLiked) {
+                    Client.Like.destroy(session, id)
+                    return false
+                } else {
+                    Client.Like.create(session, id)
+                    return true
                 }
+            })
+            .then((like) => {
                 this.setState({
-                    images: photos,
-                    ready: true
+                    hasLiked: like
                 })
             })
-        })
+            .catch((error) => {
+                console.log(error)
+            })
     }
     
     render() {
         if(this.state.ready) {
             return (
                 <div>
-                    {this.state.images.map((photo) => {
-                        return (
-                            <div className="instagramImage" key={photo.id}>
-                                <img src={photo.url} />
-                                <button id="likeButton">
-                                    <img src="./assets/heart.svg" />    
-                                </button>
-                                <div>
-                                    <span id="imgCaption"> @{this.props.user} </span>
-                                </div>
-                                <span id="imageCaption"> {photo.caption === undefined ? '' : photo.caption} </span>
-                            </div>
-                        )
-                    })}
+                    <div className="instagramImage" key={this.props.photo.id}>
+                        <div>
+                            <span id="imgCaption"> @{this.props.photo.username} </span>
+                        </div>
+                        <img src={this.props.photo.url} />
+                        <div>
+                            {this.state.hasLiked ? 
+                                <img src="./assets/heart_fill.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
+                                :
+                                <img src="./assets/heart_outline.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
+                            }
+                        </div>
+                        <span id="imageCaption"> {this.props.photo.caption === undefined ? '' : this.props.photo.caption} </span>
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div>
-                    <img src="./assets/loading.svg" alt="loading" />
-                    <br />
                     <img src="./assets/loading.svg" alt="loading" />
                 </div>
             )
