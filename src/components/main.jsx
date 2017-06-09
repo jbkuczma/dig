@@ -7,7 +7,10 @@ export default class MainWindow extends React.Component {
     
     render() {
         return (
+            <div>
+                <img src="assets/edit.svg" alt="edit" id="editIcon" />
             <Feed />
+            </div>
         )
     }
 }
