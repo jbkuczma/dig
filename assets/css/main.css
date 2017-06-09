@@ -84,3 +84,7 @@ body::-webkit-scrollbar {
 img.heart {
     fill: red;
 }
+
+#editIcon:hover {
+    cursor: pointer;
+}

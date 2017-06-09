@@ -62,9 +62,9 @@ export default class Image extends React.Component {
                         <img src={this.props.photo.url} />
                         <div>
                             {this.state.hasLiked ? 
-                                <img src="./assets/heart_fill.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
+                                <img src="./assets/img/heart_fill.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
                                 :
-                                <img src="./assets/heart_outline.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
+                                <img src="./assets/img/heart_outline.svg" className="likeButton" onClick={this.likePhoto.bind(this, this.props.photo)} />
                             }
                         </div>
                         <span id="imageCaption"> {this.props.photo.caption === undefined ? '' : this.props.photo.caption} </span>
@@ -74,7 +74,7 @@ export default class Image extends React.Component {
         } else {
             return (
                 <div>
-                    <img src="./assets/loading.svg" alt="loading" />
+                    <img src="./assets/img/loading.svg" alt="loading" />
                 </div>
             )
         }
