@@ -24,6 +24,7 @@ export default class ImageFeed extends React.Component {
         this.state = {
             title: this.props.feed['title'],
             profilesInFeed: this.props.feed['profiles'],
+            numberOfPhotosPerUser: this.props.feed['numberOfPhotosPerUser'],
             images: [],
             ready: false
         }
@@ -32,19 +33,6 @@ export default class ImageFeed extends React.Component {
     componentWillMount() {
         this.fetchImages()
     }
-
-    /**
-     * Durstenfeld shuffle algorithm. Show the photos in a somewhat random order
-     */
-    // shufflePhotos(photos) {
-    //     for (var i = photos.length - 1; i > 0; i--) {
-    //         var j = Math.floor(Math.random() * (i + 1));
-    //         var temp = photos[i];
-    //         photos[i] = photos[j];
-    //         photos[j] = temp;
-    //     }
-    //     return photos;
-    // }
 
     /* trying to implement the OG ig chronological ordering of photos */
     sortPhotos(photos) {
@@ -74,7 +62,7 @@ export default class ImageFeed extends React.Component {
                         let feed = new Client.Feed.UserMedia(session, userid)
                         feed.get()
                             .then((userFeed) => {
-                                for(var i = 0; i < 2; i ++){
+                                for(var i = 0; i < this.state.numberOfPhotosPerUser; i ++){
                                     let url = ''
                                     let hasLiked = userFeed[i]._params.hasLiked
                                     let imageUrl = userFeed[i]._params.images[0].url
@@ -95,7 +83,7 @@ export default class ImageFeed extends React.Component {
                                         hasLiked: hasLiked
                                     }
                                     photos.push(data)
-                                    if(photos.length === (this.state.profilesInFeed.length * 2)) {
+                                    if(photos.length === (this.state.profilesInFeed.length * this.state.numberOfPhotosPerUser)) {
                                         this.setState({
                                             images: this.sortPhotos(photos),
                                             ready: true
