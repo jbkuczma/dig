@@ -1,0 +1,44 @@
+body {
+    font-family: sans-serif;
+    background: #FBFBFB;
+}
+
+.titleContainer {
+    font-size: calc(20px + 1.5vw);
+}
+
+.title {
+    width: 50%;
+    display: inline-block;
+}
+.numberOfPhotos {
+    width: 50%;
+    display: inline-block;
+}
+
+.userRemoveButton {
+    float: right;
+}
+
+.user {
+    text-align: center;
+    padding: 14px 16px;
+    width: 70%;
+}
+
+.addUserContainer {
+   text-align: center;
+    padding: 14px 16px;
+    width: 70%; 
+}
+.addUserButton {
+    float: right;
+}
+
+.saveContainer {
+
+}
+
+.saveButton {
+
+}

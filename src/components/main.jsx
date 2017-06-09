@@ -6,7 +6,7 @@ import Feed from './Feed/feed.jsx'
 export default class MainWindow extends React.Component {
 
     goToEditScreen() {
-        window.location.href = '/edit.html'
+        window.location.href = 'edit.html'
     }
     
     render() {
