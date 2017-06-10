@@ -1,5 +1,10 @@
-// TODO ADD COMMENTS
-
+/* TODO ADD COMMENTS
+ *      ADD CANCEL BUTTON
+ *      ADD WAY OF CHANGING NUMBER OF PHOTOS PER USER PER FEED
+ *      ADD WAY OF CHANGING THE NAME OF A FEED
+ *      ADD WAY OF REMOVING A FEED
+ * /
+const fs = require('fs')
 let userJsonData = require('../../cookies/info.json')
 let feeds = userJsonData['feeds']
 
@@ -46,7 +51,7 @@ let feeds = userJsonData['feeds']
             let userRemoveButton = document.createElement('button')
             userRemoveButton.textContent = 'Remove User'
             userRemoveButton.className = 'userRemoveButton'
-            userRemoveButton.addEventListener('click', () => removeUser(user, users), false)
+            userRemoveButton.addEventListener('click', () => removeUser(user), false)
             span.textContent = user
             oneUserDiv.id = user
             oneUserDiv.appendChild(span)
@@ -96,19 +101,19 @@ function addUser(feedIndex, feedTitle) {
         /* add new user div to feed */
         let feed = document.getElementById(feedTitle)
         feed.appendChild(newUserDiv)
+
+        /* make input text blank */
+        document.getElementsByClassName('newUser')[feedIndex].value = ''
     }
 }
 
-function removeUser(user, users) {
-    // let userIndexToRemove = users.indexOf(user)
-    // users.splice(userIndexToRemove, 1)
+function removeUser(user) {
     let userDivToRemove = document.getElementById(user)
     userDivToRemove.parentElement.removeChild(userDivToRemove)
 }
 
 function save() {
-    console.log('save')
-    infoToSave = [] // array of feed objects
+    infoToSave = [] // array of feed objects to save to info.json
     feedsFromPage = document.getElementsByClassName('feed')
     for(let i = 0; i < feedsFromPage.length; i++) {
         let feedData = feedsFromPage[i]
@@ -127,8 +132,14 @@ function save() {
         obj['profiles'] = usernamesToSave
         infoToSave.push(obj)
     }
-    console.log(infoToSave)
-
-    // todo: save
-    // window.history.go(-1)
+    userJsonData['feeds'] = infoToSave
+    let fileName = __dirname + '/../../cookies/info.json'
+    fs.writeFile(fileName, JSON.stringify(userJsonData, null, 2), (error) => {
+        if(error) {
+            return console.log(error)
+        } else {
+            /* new info has been saved. now we can go back to the previous page */
+            window.history.go(-1)
+        }
+    })
 }
