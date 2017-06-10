@@ -1,14 +1,16 @@
-;(function createEditPage() {
-    let userJsonData = require('../../cookies/info.json')
-    let feeds = userJsonData['feeds']
-    console.log(feeds)
+// TODO ADD COMMENTS
 
+let userJsonData = require('../../cookies/info.json')
+let feeds = userJsonData['feeds']
+
+;(function createEditPage() {
     /* Add save button to page */
     let saveButtonDiv = document.createElement('div')
-    saveButtonDiv.className = 'saveContainer'
     let saveButton = document.createElement('button')
+    saveButtonDiv.className = 'saveContainer'
     saveButton.textContent = 'Save'
     saveButton.className = 'saveButton'
+    saveButton.addEventListener('click', save, false)
     saveButtonDiv.appendChild(saveButton)
     document.getElementById('editFeeds').appendChild(saveButtonDiv)
 
@@ -22,6 +24,9 @@
 
         let title = document.createElement('div')
         let numberOfPhotos = document.createElement('div')
+
+        feedDiv.className = 'feed'
+        usersDiv.id = feedTitle
         
         titleDiv.className = 'titleContainer'
         title.textContent = feedTitle
@@ -41,7 +46,9 @@
             let userRemoveButton = document.createElement('button')
             userRemoveButton.textContent = 'Remove User'
             userRemoveButton.className = 'userRemoveButton'
+            userRemoveButton.addEventListener('click', () => removeUser(user, users), false)
             span.textContent = user
+            oneUserDiv.id = user
             oneUserDiv.appendChild(span)
             oneUserDiv.appendChild(userRemoveButton)
             oneUserDiv.className = 'user'
@@ -52,8 +59,10 @@
         let addUserDiv = document.createElement('div')
         let addUserInput = document.createElement('input')
         let addUserButton = document.createElement('button')
+        addUserInput.className = 'newUser'
         addUserButton.textContent = 'Add User'
         addUserButton.className = 'addUserButton'
+        addUserButton.addEventListener('click', () => addUser(i, feedTitle), false)
         addUserDiv.className = 'addUserContainer'
         addUserDiv.appendChild(addUserInput)
         addUserDiv.appendChild(addUserButton)
@@ -64,9 +73,62 @@
         feedDiv.appendChild(addUserDiv)
         feedDiv.appendChild(document.createElement('br')) //add a break between feeds
         
-
         document.getElementById('editFeeds').appendChild(feedDiv)
     }
-    
-    
 }())
+
+/* need to pass in an index value so we know which feed we will be inserting into */
+function addUser(feedIndex, feedTitle) {
+    let newUser = document.getElementsByClassName('newUser')[feedIndex].value
+    if(newUser !== '') {
+        let newUserDiv = document.createElement('div')
+        let span = document.createElement('span')
+        let userRemoveButton = document.createElement('button')
+        userRemoveButton.textContent = 'Remove User'
+        userRemoveButton.className = 'userRemoveButton'
+        userRemoveButton.addEventListener('click', () => removeUser(newUser, users), false)
+        span.textContent = newUser
+        newUserDiv.id = newUser
+        newUserDiv.appendChild(span)
+        newUserDiv.appendChild(userRemoveButton)
+        newUserDiv.className = 'user'
+
+        /* add new user div to feed */
+        let feed = document.getElementById(feedTitle)
+        feed.appendChild(newUserDiv)
+    }
+}
+
+function removeUser(user, users) {
+    // let userIndexToRemove = users.indexOf(user)
+    // users.splice(userIndexToRemove, 1)
+    let userDivToRemove = document.getElementById(user)
+    userDivToRemove.parentElement.removeChild(userDivToRemove)
+}
+
+function save() {
+    console.log('save')
+    infoToSave = [] // array of feed objects
+    feedsFromPage = document.getElementsByClassName('feed')
+    for(let i = 0; i < feedsFromPage.length; i++) {
+        let feedData = feedsFromPage[i]
+        let obj = {}
+        let titleContent = feedData.childNodes[0]
+        let title = titleContent.childNodes[0].childNodes[0].textContent
+        let numberOfPhotosPerUser = titleContent.childNodes[1].childNodes[0].textContent //probably changing
+        let usernames = feedData.childNodes[1].childNodes
+        let usernamesToSave = []
+        for(let j = 0; j < usernames.length; j++) {
+            let usernameToAdd = usernames[j].childNodes[0].textContent
+            usernamesToSave.push(usernameToAdd)
+        }
+        obj['title'] = title
+        obj['numberOfPhotosPerUser'] = numberOfPhotosPerUser
+        obj['profiles'] = usernamesToSave
+        infoToSave.push(obj)
+    }
+    console.log(infoToSave)
+
+    // todo: save
+    // window.history.go(-1)
+}
