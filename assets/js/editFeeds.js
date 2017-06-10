@@ -1,9 +1,10 @@
-/* TODO ADD COMMENTS
+/** TODO
+ *      ADD COMMENTS
  *      ADD CANCEL BUTTON
  *      ADD WAY OF CHANGING NUMBER OF PHOTOS PER USER PER FEED
  *      ADD WAY OF CHANGING THE NAME OF A FEED
  *      ADD WAY OF REMOVING A FEED
- * /
+ */
 const fs = require('fs')
 let userJsonData = require('../../cookies/info.json')
 let feeds = userJsonData['feeds']

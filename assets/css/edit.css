@@ -18,6 +18,17 @@ body {
 
 .userRemoveButton {
     float: right;
+    padding: 10px 20px;
+    background: #FBFBFB;
+    border: 1px #D3D3D3 solid;
+    font-size: 14px;
+}
+.userRemoveButton:hover {
+    opacity: 0.8;
+    background: #F44336;
+    color: #FBFBFB;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 
 .user {
@@ -33,6 +44,17 @@ body {
 }
 .addUserButton {
     float: right;
+    padding: 10px 20px;
+    background: #FBFBFB;
+    border: 1px #D3D3D3 solid;
+    font-size: 14px;
+}
+.addUserButton:hover {
+    opacity: 0.8;
+    background: #4CAF50;
+    color: #FBFBFB;
+    transition: all 0.3s;
+    cursor: pointer;
 }
 
 .saveContainer {
@@ -40,5 +62,15 @@ body {
 }
 
 .saveButton {
-
+    padding: 12px 30px;
+    background: #FBFBFB;
+    border: 1px #D3D3D3 solid;
+    font-size: 14px;
+}
+.saveButton:hover {
+    opacity: 0.6;
+    background: #3897F0;
+    color: #FBFBFB;
+    transition: all 0.3s;
+    cursor: pointer;
 }
