@@ -1,6 +1,5 @@
 /** TODO
  *      ADD COMMENTS
- *      ADD CANCEL BUTTON
  *      ADD WAY OF CHANGING NUMBER OF PHOTOS PER USER PER FEED
  *      ADD WAY OF CHANGING THE NAME OF A FEED
  *      ADD WAY OF REMOVING A FEED
@@ -11,14 +10,19 @@ let feeds = userJsonData['feeds']
 
 ;(function createEditPage() {
     /* Add save button to page */
-    let saveButtonDiv = document.createElement('div')
+    let buttonDiv = document.createElement('div')
     let saveButton = document.createElement('button')
-    saveButtonDiv.className = 'saveContainer'
+    let cancelButton = document.createElement('button')
+    buttonDiv.className = 'saveContainer'
     saveButton.textContent = 'Save'
     saveButton.className = 'saveButton'
     saveButton.addEventListener('click', save, false)
-    saveButtonDiv.appendChild(saveButton)
-    document.getElementById('editFeeds').appendChild(saveButtonDiv)
+    buttonDiv.appendChild(saveButton)
+    cancelButton.className = 'cancelButton'
+    cancelButton.textContent = 'Cancel'
+    cancelButton.addEventListener('click', cancel, false)
+    buttonDiv.appendChild(cancelButton)
+    document.getElementById('editFeeds').appendChild(buttonDiv)
 
 
     for(let i = 0; i < feeds.length; i++) {
@@ -27,24 +31,25 @@ let feeds = userJsonData['feeds']
         let feedDiv = document.createElement('div')
         let titleDiv = document.createElement('div')
         let usersDiv = document.createElement('div')
-
         let title = document.createElement('div')
         let numberOfPhotos = document.createElement('div')
+        let removeFeedButton = document.createElement('button')
 
         feedDiv.className = 'feed'
-        usersDiv.id = feedTitle
-        
+        usersDiv.id = feedTitle      
         titleDiv.className = 'titleContainer'
         title.textContent = feedTitle
         title.className = 'title'
-
         numberOfPhotos.textContent = numberOfPhotosPerUser
         numberOfPhotos.className = 'numberOfPhotos'
-
         titleDiv.appendChild(title)
         titleDiv.appendChild(numberOfPhotos)
-        
-        
+
+        removeFeedButton.id = feedTitle + '_button'
+        removeFeedButton.className = 'removeFeedButton'
+        removeFeedButton.textContent = 'Delete Feed'
+        removeFeedButton.addEventListener('click', () => removeFeed(feedTitle), false)
+
         let users = feeds[i]['profiles']
         users.forEach((user) => {
             let oneUserDiv = document.createElement('div')
@@ -66,6 +71,7 @@ let feeds = userJsonData['feeds']
         let addUserInput = document.createElement('input')
         let addUserButton = document.createElement('button')
         addUserInput.className = 'newUser'
+        addUserInput.placeholder = 'New user'
         addUserButton.textContent = 'Add User'
         addUserButton.className = 'addUserButton'
         addUserButton.addEventListener('click', () => addUser(i, feedTitle), false)
@@ -75,6 +81,7 @@ let feeds = userJsonData['feeds']
 
         /* add the created divs to the page */
         feedDiv.appendChild(titleDiv)
+        feedDiv.appendChild(removeFeedButton)
         feedDiv.appendChild(usersDiv)
         feedDiv.appendChild(addUserDiv)
         feedDiv.appendChild(document.createElement('br')) //add a break between feeds
@@ -143,4 +150,15 @@ function save() {
             window.history.go(-1)
         }
     })
+}
+
+function cancel() {
+    window.history.go(-1)
+}
+
+function removeFeed(feedTitle) {
+    let feedToRemove = document.getElementById(feedTitle)
+    let parentOfFeedToRemove = feedToRemove.parentElement
+    let parent = parentOfFeedToRemove.parentElement
+    parent.removeChild(parentOfFeedToRemove)
 }
