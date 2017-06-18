@@ -3,17 +3,35 @@ body {
     background: #FBFBFB;
 }
 
-.titleContainer {
+/*.titleContainer {
     font-size: calc(20px + 1.5vw);
+}*/
+/*input tag */
+.title {
+    font-size: calc(18px + 1.5vw);
+    width: 50%;
+    display: inline-block;
+    border: none;
+    background-color: #FBFBFB;
+    border-bottom: 1px #D3D3D3 solid;
+    outline: none;
+    height: 40px;
 }
 
-.title {
+/*.numberOfPhotos {
     width: 50%;
     display: inline-block;
-}
+}*/
+/*input tag */
 .numberOfPhotos {
     width: 50%;
+    font-size: calc(18px + 1.5vw);
     display: inline-block;
+    border: none;
+    background-color: #FBFBFB;
+    border-bottom: 1px #D3D3D3 solid;
+    outline: none;
+    height: 40px;
 }
 
 .userRemoveButton {
@@ -98,6 +116,7 @@ body {
 }
 
 .removeFeedButton {
+    margin-top: 5px;
     padding: 10px 20px;
     background: #FBFBFB;
     border: 1px #D3D3D3 solid;

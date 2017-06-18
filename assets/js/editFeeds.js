@@ -1,15 +1,12 @@
 /** TODO
  *      ADD COMMENTS
- *      ADD WAY OF CHANGING NUMBER OF PHOTOS PER USER PER FEED
- *      ADD WAY OF CHANGING THE NAME OF A FEED
- *      ADD WAY OF REMOVING A FEED
  */
 const fs = require('fs')
 let userJsonData = require('../../cookies/info.json')
 let feeds = userJsonData['feeds']
 
 ;(function createEditPage() {
-    /* Add save button to page */
+    /* Add save and cancel buttons to page */
     let buttonDiv = document.createElement('div')
     let saveButton = document.createElement('button')
     let cancelButton = document.createElement('button')
@@ -24,32 +21,40 @@ let feeds = userJsonData['feeds']
     buttonDiv.appendChild(cancelButton)
     document.getElementById('editFeeds').appendChild(buttonDiv)
 
-
+    /* Iterate over the feeds from info.json and create divs */
     for(let i = 0; i < feeds.length; i++) {
         let feedTitle = feeds[i]['title']
         let numberOfPhotosPerUser = feeds[i]['numberOfPhotosPerUser']
         let feedDiv = document.createElement('div')
         let titleDiv = document.createElement('div')
         let usersDiv = document.createElement('div')
-        let title = document.createElement('div')
-        let numberOfPhotos = document.createElement('div')
+        // let title = document.createElement('div')
+        let title = document.createElement('input')
+        // let numberOfPhotos = document.createElement('div')
+        let numberOfPhotos = document.createElement('input')
         let removeFeedButton = document.createElement('button')
 
         feedDiv.className = 'feed'
         usersDiv.id = feedTitle      
         titleDiv.className = 'titleContainer'
-        title.textContent = feedTitle
+        // title.value = feedTitle
+        // TODO: look into focus and blur for when a user clicks out of the input area to make sure the title is at least 1 char long
+        // title.textContent = feedTitle
         title.className = 'title'
-        numberOfPhotos.textContent = numberOfPhotosPerUser
+        title.setAttribute('value', feedTitle)
+        // numberOfPhotos.textContent = numberOfPhotosPerUser
+        // numberOfPhotos.value = numberOfPhotosPerUser
+        numberOfPhotos.setAttribute('value', numberOfPhotosPerUser)
         numberOfPhotos.className = 'numberOfPhotos'
         titleDiv.appendChild(title)
         titleDiv.appendChild(numberOfPhotos)
 
-        removeFeedButton.id = feedTitle + '_button'
+        removeFeedButton.id = feedTitle + '_removeButton'
         removeFeedButton.className = 'removeFeedButton'
         removeFeedButton.textContent = 'Delete Feed'
         removeFeedButton.addEventListener('click', () => removeFeed(feedTitle), false)
 
+        /* Iterate over the users in each feed and create a div for them */
         let users = feeds[i]['profiles']
         users.forEach((user) => {
             let oneUserDiv = document.createElement('div')
@@ -105,11 +110,9 @@ function addUser(feedIndex, feedTitle) {
         newUserDiv.appendChild(span)
         newUserDiv.appendChild(userRemoveButton)
         newUserDiv.className = 'user'
-
         /* add new user div to feed */
         let feed = document.getElementById(feedTitle)
         feed.appendChild(newUserDiv)
-
         /* make input text blank */
         document.getElementsByClassName('newUser')[feedIndex].value = ''
     }
@@ -127,9 +130,9 @@ function save() {
         let feedData = feedsFromPage[i]
         let obj = {}
         let titleContent = feedData.childNodes[0]
-        let title = titleContent.childNodes[0].childNodes[0].textContent
-        let numberOfPhotosPerUser = titleContent.childNodes[1].childNodes[0].textContent //probably changing
-        let usernames = feedData.childNodes[1].childNodes
+        let title = titleContent.childNodes[0].value
+        let numberOfPhotosPerUser = titleContent.childNodes[1].value
+        let usernames = feedData.childNodes[2].childNodes
         let usernamesToSave = []
         for(let j = 0; j < usernames.length; j++) {
             let usernameToAdd = usernames[j].childNodes[0].textContent
@@ -138,6 +141,7 @@ function save() {
         obj['title'] = title
         obj['numberOfPhotosPerUser'] = numberOfPhotosPerUser
         obj['profiles'] = usernamesToSave
+        console.log(obj)
         infoToSave.push(obj)
     }
     userJsonData['feeds'] = infoToSave
