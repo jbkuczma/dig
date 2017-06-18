@@ -28,24 +28,20 @@ let feeds = userJsonData['feeds']
         let feedDiv = document.createElement('div')
         let titleDiv = document.createElement('div')
         let usersDiv = document.createElement('div')
-        // let title = document.createElement('div')
         let title = document.createElement('input')
-        // let numberOfPhotos = document.createElement('div')
         let numberOfPhotos = document.createElement('input')
         let removeFeedButton = document.createElement('button')
 
         feedDiv.className = 'feed'
         usersDiv.id = feedTitle      
         titleDiv.className = 'titleContainer'
-        // title.value = feedTitle
         // TODO: look into focus and blur for when a user clicks out of the input area to make sure the title is at least 1 char long
-        // title.textContent = feedTitle
         title.className = 'title'
         title.setAttribute('value', feedTitle)
-        // numberOfPhotos.textContent = numberOfPhotosPerUser
-        // numberOfPhotos.value = numberOfPhotosPerUser
-        numberOfPhotos.setAttribute('value', numberOfPhotosPerUser)
+        title.setAttribute('placeholder', 'Name of feed')
         numberOfPhotos.className = 'numberOfPhotos'
+        numberOfPhotos.setAttribute('value', numberOfPhotosPerUser)
+        numberOfPhotos.setAttribute('placeholder', 'Number of photos')
         titleDiv.appendChild(title)
         titleDiv.appendChild(numberOfPhotos)
 

@@ -3,12 +3,9 @@ body {
     background: #FBFBFB;
 }
 
-/*.titleContainer {
-    font-size: calc(20px + 1.5vw);
-}*/
 /*input tag */
 .title {
-    font-size: calc(18px + 1.5vw);
+    font-size: calc(14px + 1.5vw);
     width: 50%;
     display: inline-block;
     border: none;
@@ -18,10 +15,6 @@ body {
     height: 40px;
 }
 
-/*.numberOfPhotos {
-    width: 50%;
-    display: inline-block;
-}*/
 /*input tag */
 .numberOfPhotos {
     width: 50%;
@@ -58,7 +51,7 @@ body {
 .newUser {
     padding: 10px 20px;
 }
-.newUser:focus {
+.newUser:focus, .cancelButton:focus, .saveButton:focus, .userRemoveButton:focus, .removeFeedButton:focus, .addUserButton:focus {
     outline: none;
 }
 
@@ -91,7 +84,6 @@ body {
     background: #FBFBFB;
     border: 1px #D3D3D3 solid;
     font-size: 14px;
-
     margin-right: 5px;
 }
 .saveButton:hover {
