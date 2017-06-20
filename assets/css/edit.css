@@ -1,3 +1,4 @@
+/* for possible icon, from -> https://webkul.github.io/coolhue/ : background-image: linear-gradient( 135deg, #FCCF31 0%, #F55555 100%); */
 body {
     font-family: sans-serif;
     background: #FBFBFB;
@@ -51,7 +52,14 @@ body {
 .newUser {
     padding: 10px 20px;
 }
-.newUser:focus, .cancelButton:focus, .saveButton:focus, .userRemoveButton:focus, .removeFeedButton:focus, .addUserButton:focus {
+.newUser:focus, 
+.cancelButton:focus, 
+.saveButton:focus, 
+.userRemoveButton:focus, 
+.removeFeedButton:focus, 
+.addUserButton:focus, 
+.newFeedAddButton:focus, 
+.newFeedInput:focus {
     outline: none;
 }
 
@@ -120,4 +128,36 @@ body {
     color: #FBFBFB;
     transition: all 0.3s;
     cursor: pointer;  
+}
+
+.newFeed {
+    border-bottom: 1.5px #D3D3D3 solid;
+}
+.newFeedTitle {
+    margin: 0;
+    font-weight: 200; 
+}
+.newFeedInput {
+    width: 30%;
+    border: none;
+    background-color: #FBFBFB;
+    outline: none;
+}
+.newFeedAddButton {
+    width: 20%;
+    margin-top: 5px;
+    padding: 10px 20px;
+    background: #FBFBFB;
+    border: none;
+    border-left: 1px #D3D3D3 solid;
+    border-right: 1px #D3D3D3 solid;
+    border-top: 1px #D3D3D3 solid;
+    font-size: 14px;
+}
+.newFeedAddButton:hover {
+    opacity: 0.8;
+    background: #4CAF50;
+    color: #FBFBFB;
+    transition: all 0.3s;
+    cursor: pointer;
 }

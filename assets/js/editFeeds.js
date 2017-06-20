@@ -1,4 +1,5 @@
 /** TODO
+ *      CREATE NEW FEED SECTION
  *      ADD COMMENTS
  */
 const fs = require('fs')
@@ -20,6 +21,31 @@ let feeds = userJsonData['feeds']
     cancelButton.addEventListener('click', cancel, false)
     buttonDiv.appendChild(cancelButton)
     document.getElementById('editFeeds').appendChild(buttonDiv)
+    document.getElementById('editFeeds').appendChild(document.createElement('br')) //add a break between the button div and create new feed div
+
+    let newFeedDiv = document.createElement('div')
+    let newFeedTitle = document.createElement('h2')
+    let newFeedTitleInput = document.createElement('input')
+    let newFeedNumberOfPhotosInput = document.createElement('input')
+    let newFeedCreateButton = document.createElement('button')
+    newFeedTitle.className = 'newFeedTitle'
+    newFeedTitle.textContent = 'Create a new feed'
+    newFeedTitleInput.setAttribute('placeholder', 'Feed title')
+    newFeedTitleInput.id = 'newTitle'
+    newFeedTitleInput.className = 'newFeedInput'
+    newFeedNumberOfPhotosInput.setAttribute('placeholder', 'Number of Photos')
+    newFeedNumberOfPhotosInput.id = 'newNumberOfPhotos'
+    newFeedNumberOfPhotosInput.className = 'newFeedInput'
+    newFeedCreateButton.addEventListener('click', createFeed, false)
+    newFeedCreateButton.className = 'newFeedAddButton'
+    newFeedCreateButton.textContent = 'Create'
+    newFeedDiv.className = 'newFeed'
+    newFeedDiv.appendChild(newFeedTitle)
+    newFeedDiv.appendChild(newFeedTitleInput)
+    newFeedDiv.appendChild(newFeedNumberOfPhotosInput)
+    newFeedDiv.appendChild(newFeedCreateButton)
+    /* add new feed div to page */
+    document.getElementById('editFeeds').appendChild(newFeedDiv)
 
     /* Iterate over the feeds from info.json and create divs */
     for(let i = 0; i < feeds.length; i++) {
@@ -128,6 +154,9 @@ function save() {
         let titleContent = feedData.childNodes[0]
         let title = titleContent.childNodes[0].value
         let numberOfPhotosPerUser = titleContent.childNodes[1].value
+        if(title === '' || numberOfPhotosPerUser === '') {
+            return
+        }
         let usernames = feedData.childNodes[2].childNodes
         let usernamesToSave = []
         for(let j = 0; j < usernames.length; j++) {
@@ -161,4 +190,9 @@ function removeFeed(feedTitle) {
     let parentOfFeedToRemove = feedToRemove.parentElement
     let parent = parentOfFeedToRemove.parentElement
     parent.removeChild(parentOfFeedToRemove)
+}
+
+/* when the button is clicked, the values in both inputs will be used to create a new feed and add to th list of existing feeds */
+function createFeed() {
+    console.log('clicked')
 }
