@@ -64,21 +64,18 @@
     </head>
     <body>
         <div class="content">
-            <!--<form action="#" onsubmit="instagramLogin(this)" class="loginForm">-->
             <div class="loginForm form">
                 <div class="imgcontainer">
                     <img src="assets/img/instagram.svg" alt="instagram" class="ig">
                 </div>
-
                 <div class="container">
                     <p><strong>dig</strong>, create custom image feeds</p>
                     <input type="text" placeholder="Username" name="uname" id="uname" required>
                     <input type="password" placeholder="Password" name="psw" id="psw" required>
                     <button type="submit" id="submitButton" onclick="instagramLogin(this)">Login</button>
-                    <img src="assets/loading.svg" alt="loading" class="loader" />
+                    <img src="assets/img/loading.svg" alt="loading" class="loader" />
                     <p id="errorText"> There was an error logging in. Please try again </p>
                 </div>
-            <!--</form>-->
             </div>
         </div>
         <script type="text/javascript">
@@ -102,13 +99,11 @@
             function tryLogin(username, password) {
                 Client.Session.create(device, storage, username, password)
                     .then((session) => {
-                        console.log(session)
                         let user = {
                             'user': username,
                             'pass': password
                         }
                         // login successful
-                        /* @todo: save username and password */
                         ipc.send('loginSuccessful', user)
 
                     })

@@ -194,5 +194,9 @@ function removeFeed(feedTitle) {
 
 /* when the button is clicked, the values in both inputs will be used to create a new feed and add to th list of existing feeds */
 function createFeed() {
-    console.log('clicked')
+    let title = document.getElementById('newTitle')
+    let numberOfPhotos = document.getElementById('newNumberOfPhotos')
+    if(title === '' || numberOfPhotos) {
+        return
+    }
 }

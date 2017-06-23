@@ -88,3 +88,10 @@ img.heart {
 #editIcon:hover {
     cursor: pointer;
 }
+
+#logoutIcon {
+    float: right;
+}
+#logoutIcon:hover {
+    cursor: pointer;
+}
