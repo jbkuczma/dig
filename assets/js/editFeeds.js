@@ -194,9 +194,53 @@ function removeFeed(feedTitle) {
 
 /* when the button is clicked, the values in both inputs will be used to create a new feed and add to th list of existing feeds */
 function createFeed() {
-    let title = document.getElementById('newTitle')
-    let numberOfPhotos = document.getElementById('newNumberOfPhotos')
-    if(title === '' || numberOfPhotos) {
+    let title = document.getElementById('newTitle').value
+    let numberOfPhotos = document.getElementById('newNumberOfPhotos').value
+    if(title.length < 1 || !Number.isInteger(parseInt(numberOfPhotos, 10))) {
         return
     }
+    let newFeed = document.createElement('div')
+
+    let titleDiv = document.createElement('div')
+    let usersDiv = document.createElement('div')
+    let titleInput = document.createElement('input')
+    let numberOfPhotosInput = document.createElement('input')
+    let removeFeedButton = document.createElement('button')
+    /* title and number of photos input*/
+    newFeed.className = 'feed'
+    usersDiv.id = title      
+    titleDiv.className = 'titleContainer'
+    titleInput.className = 'title'
+    titleInput.setAttribute('value', title)
+    titleInput.setAttribute('placeholder', 'Name of feed')
+    numberOfPhotosInput.className = 'numberOfPhotos'
+    numberOfPhotosInput.setAttribute('value', numberOfPhotos)
+    numberOfPhotosInput.setAttribute('placeholder', 'Number of photos')
+    titleDiv.appendChild(titleInput)
+    titleDiv.appendChild(numberOfPhotosInput)
+    removeFeedButton.id = title + '_removeButton'
+    removeFeedButton.className = 'removeFeedButton'
+    removeFeedButton.textContent = 'Delete Feed'
+    removeFeedButton.addEventListener('click', () => removeFeed(title), false)
+    /* add user button */
+    let addUserDiv = document.createElement('div')
+    let addUserInput = document.createElement('input')
+    let addUserButton = document.createElement('button')
+    addUserInput.className = 'newUser'
+    addUserInput.placeholder = 'New user'
+    addUserButton.textContent = 'Add User'
+    addUserButton.className = 'addUserButton'
+    addUserButton.addEventListener('click', () => addUser(0, title), false) // 0 is hardcoded for the index since we are adding this list to the beginning of feeds
+    addUserDiv.className = 'addUserContainer'
+    addUserDiv.appendChild(addUserInput)
+    addUserDiv.appendChild(addUserButton)
+
+
+    newFeed.appendChild(titleDiv)
+    newFeed.appendChild(removeFeedButton)
+    newFeed.appendChild(usersDiv)
+    newFeed.appendChild(addUserDiv)
+    newFeed.appendChild(document.createElement('br')) //add a break between feeds
+
+    document.getElementsByClassName('newFeed')[0].appendChild(newFeed)
 }
