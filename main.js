@@ -39,9 +39,11 @@ let userIsAlreadyLoggedIn = true;
 })()
 
 // private ig
-var Client = require('instagram-private-api').V1;
-var device = new Client.Device('user');
-var storage = new Client.CookieFileStorage(__dirname + '/cookies/user.json');
+var Client = require('instagram-private-api').V1
+var device = new Client.Device('user')
+var storage = new Client.CookieFileStorage(__dirname + '/cookies/user.json')
+
+var userInfo = require( __dirname + '/cookies/info.json')
 
 function createWindow () {
 
@@ -79,7 +81,7 @@ function createWindow () {
       let dataToAdd = {}
       dataToAdd['username'] = data['user']
       dataToAdd['password'] = data['pass']
-      dataToAdd['feeds'] = []
+      dataToAdd['feeds'] = userInfo.feeds
       let jsonFileToWriteTo =  __dirname + '/cookies/info.json'
       fs.readFile(jsonFileToWriteTo, (error, data) => {
         fs.writeFile(jsonFileToWriteTo, JSON.stringify(dataToAdd))
