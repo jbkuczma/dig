@@ -126,7 +126,7 @@ function addUser(feedIndex, feedTitle) {
         let userRemoveButton = document.createElement('button')
         userRemoveButton.textContent = 'Remove User'
         userRemoveButton.className = 'userRemoveButton'
-        userRemoveButton.addEventListener('click', () => removeUser(newUser, users), false)
+        userRemoveButton.addEventListener('click', () => removeUser(newUser), false)
         span.textContent = newUser
         newUserDiv.id = newUser
         newUserDiv.appendChild(span)
