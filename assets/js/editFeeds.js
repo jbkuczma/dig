@@ -1,5 +1,5 @@
 /** TODO
- *      CREATE NEW FEED SECTION
+ *      HANDLE A PRIVATE USER
  *      ADD COMMENTS
  */
 const fs = require('fs')
@@ -175,8 +175,9 @@ function save() {
         if(error) {
             return console.log(error)
         } else {
-            /* new info has been saved. now we can go back to the previous page */
-            window.history.go(-1)
+            setTimeout(() => {
+                window.history.go(-1)
+            }, 500)
         }
     })
 }
