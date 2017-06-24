@@ -1,11 +1,12 @@
 {
   "name": "dig",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Create custom Instagram feeds on your desktop",
   "main": "main.js",
   "scripts": {
     "watch": "node_modules/.bin/webpack --watch",
-    "start": "electron ."
+    "start": "electron .",
+    "build-macOS": "electron-packager . --overwrite --asar --out=release-builds --platform=darwin --arch=x64 --icon=assets/icons/mac/dig.icns"
   },
   "repository": "https://github.com/jbkuczma/dig",
   "keywords": [
@@ -15,14 +16,17 @@
   ],
   "author": "James Kuczmarski",
   "license": "MIT",
+  "dependencies": {
+    "instagram-private-api": "^0.5.16",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-react": "^6.24.1",
     "electron": "~1.6.2",
-    "instagram-private-api": "^0.5.16",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "electron-packager": "^8.7.1",
     "webpack": "^2.6.1"
   }
 }

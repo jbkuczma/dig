@@ -53,7 +53,8 @@ function createWindow () {
     height: 600,
     minWidth: 550,
     minHeight: 700,
-    backgroundColor: '#FBFBFB'
+    backgroundColor: '#FBFBFB',
+    icon: path.join(__dirname + 'assets/icons/png/256x256.png')
   })
 
   if (userIsAlreadyLoggedIn) {
