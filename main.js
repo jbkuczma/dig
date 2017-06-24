@@ -78,20 +78,37 @@ function createWindow () {
         Save the username and password of the logged in user
         ASSUMES that the info.json file is empty 
       */
-      let dataToAdd = {}
-      dataToAdd['username'] = data['user']
-      dataToAdd['password'] = data['pass']
-      dataToAdd['feeds'] = userInfo.feeds
-      let jsonFileToWriteTo =  __dirname + '/cookies/info.json'
-      fs.readFile(jsonFileToWriteTo, (error, data) => {
-        fs.writeFile(jsonFileToWriteTo, JSON.stringify(dataToAdd))
-      })
+      if(!userInfo) { // if there is no user info (such as logging in for the first time) create the JSON object
+        let dataToAdd = {}
+        dataToAdd['username'] = data['user']
+        dataToAdd['password'] = data['pass']
+        dataToAdd['feeds'] = userInfo.feeds
+        let jsonFileToWriteTo =  __dirname + '/cookies/info.json'
+        fs.readFile(jsonFileToWriteTo, (error, data) => {
+          fs.writeFile(jsonFileToWriteTo, JSON.stringify(dataToAdd))
+        })
+      }
       mainWindow.reload()
       mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true
       }))
+  })
+
+  ipcMain.on('saveFile', () => {
+    mainWindow.reload()
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+      }))
+  })
+  
+  ipcMain.on('cancel', () => {
+    if(mainWindow.webContents.canGoBack()) {
+      mainWindow.webContents.goBack()
+    }
   })
 
   // Emitted when the window is closed.

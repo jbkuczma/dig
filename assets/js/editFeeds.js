@@ -1,10 +1,13 @@
 /** TODO
  *      HANDLE A PRIVATE USER
+ *      WHEN CHANGING THE NAME OF A CREATED FEED, ADDING A NEW USER NO LONGER WORKS
  *      ADD COMMENTS
  */
 const fs = require('fs')
 let userJsonData = require('../../cookies/info.json')
 let feeds = userJsonData['feeds']
+
+const ipc = require('electron').ipcRenderer
 
 ;(function createEditPage() {
     /* Add save and cancel buttons to page */
@@ -176,14 +179,14 @@ function save() {
             return console.log(error)
         } else {
             setTimeout(() => {
-                window.history.go(-1)
+                ipc.send('saveFile')
             }, 500)
         }
     })
 }
 
 function cancel() {
-    window.history.go(-1)
+    ipc.send('cancel')
 }
 
 function removeFeed(feedTitle) {
