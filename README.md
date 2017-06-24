@@ -19,3 +19,6 @@ dig is currently under development and will be available on Windows, macOS, and 
     npm install
     npm run watch
     npm start
+
+#### Credit
+App icon uses a camera icon made by <a href="http://www.flaticon.com/authors/epiccoders" title="EpicCoders">EpicCoders</a> from www.flaticon.com.
