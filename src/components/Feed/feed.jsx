@@ -12,7 +12,7 @@ export default class Feed extends React.Component {
             data: userJsonData['feeds']
         }
     }
-    
+
     render() {
         return (
             <div className="allImageFeeds">

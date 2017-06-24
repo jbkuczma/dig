@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 
 import Feed from './Feed/feed.jsx'
 
+let userJsonData = require('../../cookies/info.json')
+const fs = require('fs')
+
 export default class MainWindow extends React.Component {
 
     goToEditScreen() {
@@ -10,7 +13,16 @@ export default class MainWindow extends React.Component {
     }
 
     logout() {
-        window.location.href = 'login.html'
+        let fileName = __dirname + '/cookies/info.json'
+        fs.writeFile(fileName, JSON.stringify(userJsonData, null, 2), (error) => {
+            if(error) {
+                return console.log(error)
+            } else {
+                setTimeout(() => {
+                     window.location.href = 'login.html'
+                }, 500)
+            }
+        })     
     }
     
     render() {
