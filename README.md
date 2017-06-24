@@ -1,5 +1,5 @@
 <p align="center">
-  <!--<img src="">-->
+  <img src="https://github.com/jbkuczma/dig/blob/master/assets/icons/png/128x128.png">
   <h2 align="center"> This is dig, <br> a desktop client for creating custom Instagram feeds  </h2>
   <br>
   <br>
