@@ -6,7 +6,10 @@
   "scripts": {
     "watch": "node_modules/.bin/webpack --watch",
     "start": "electron .",
-    "build-macOS": "electron-packager . --overwrite --asar --out=release-builds --platform=darwin --arch=x64 --icon=assets/icons/mac/dig.icns"
+    "build-macOS": "electron-packager . --overwrite --asar --prune --out=release-builds --platform=darwin --arch=x64 --icon=assets/icons/mac/dig.icns",
+    "build-linux": "electron-packager . --overwrite --asar --prune --out=release-builds --platform=linux --arch=x64",
+    "build-windows32": "electron-packager . --overwrite --asar --prune --out=release-builds --platform=win32 --arch=ia32 --icon=assets/icons/win/dig.ico",
+    "build-windows64": "electron-packager . --overwrite --asar --prune --out=release-builds --platform=win32 --arch=x64 --icon=assets/icons/win/dig.ico"
   },
   "repository": "https://github.com/jbkuczma/dig",
   "keywords": [
