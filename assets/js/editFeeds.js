@@ -68,6 +68,7 @@ const ipc = require('electron').ipcRenderer
         title.className = 'title'
         title.setAttribute('value', feedTitle)
         title.setAttribute('placeholder', 'Name of feed')
+        title.addEventListener('keyup', updateDivId, false)
         numberOfPhotos.className = 'numberOfPhotos'
         numberOfPhotos.setAttribute('value', numberOfPhotosPerUser)
         numberOfPhotos.setAttribute('placeholder', 'Number of photos')
@@ -247,4 +248,12 @@ function createFeed() {
     newFeed.appendChild(document.createElement('br')) //add a break between feeds
 
     document.getElementsByClassName('newFeed')[0].appendChild(newFeed)
+}
+
+function updateDivId() {
+    let updatedTitle = event.srcElement.value
+    let parentElement = event.srcElement.parentElement // div class titleContainer
+    let parentToparentElement = parentElement.parentElement // div class feed
+    let divToUpdateTitle = parentToparentElement.children[2] // the feed to add to with the id of the title is the child at index 2
+    divToUpdateTitle.id = updatedTitle
 }
